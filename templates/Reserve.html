@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+        height:40px;
+        }
+        .c2{
+        text-align:center;
+        }
+        table{
+        text-align:center;
+        margin:0 auto
+        }
+    </style>
+</head>
+<body>
+<h2 class="c2">欢迎来到预约页面</h2>
+<h3 class="c2">这是您的预约记录</h3>
+<table border="1">
+        <tr>
+              <th>预约桌号</th>
+              <th>预约时间</th>
+              <th>状态</th>
+            <th>操作</th>
+          </tr>
+        {% for reserve in historyReserve%}
+        <tr>
+        <td>{{reserve.get("tableNo")}}</td>
+        <td>{{reserve.get("reserveDate")}}</td>
+        <td>{{reserve.get("state")}}</td>
+            {%if reserve.get("state")=="过期"%}
+            <td></td>
+            {%elif reserve.get("state")=="可用餐"%}
+            <td style="color:red"onclick="toJudgeToMenu()">就坐用餐</td>
+            {%else %}
+            <td style="color:red"onclick="Cancel()">取消订单</td>
+            {%endif%}
+    </tr>
+        {% endfor %}
+</table>
+<div style="text-align:center;"><input type="button"onclick="toWelcome()" style="width:40px;padding:6px;"value="返回"></div>
+<h2 class="c2">填写预约信息</h2>
+<form method="post" action="/Reserve">
+    {%if theDate%}
+    <div class="c2">请输入日期<input type="date" class="dateInfo" name="reserveDate" min="2022-06-17" max="2022-06-20" value="{{theDate}}" required></div>
+    {%endif%}
+    {%if theNum%}
+    <div class="c2">请输入人数<input type="number" name="peopleNumber"value="{{theNum}}" min="1"max="6" required></div>
+    {%endif%}
+    {%if not theNum%}
+    <div class="c2">请输入人数<input type="number" name="peopleNumber"value="1" min="1"max="6" required></div>
+    {%endif%}
+    {%if not theDate%}
+    <div class="c2">请输入日期<input type="date" class="dateInfo" name="reserveDate" min="2022-06-17" max="2022-06-20" required></div>
+    {%endif%}
+    <div style="text-align:center;"><input onclick="setData()" style="width:40px;padding:6px;" type="submit"value="查询"></div>
+</form>
+<h3 class="c2">可用时段为</h3>
+{%if  availableReserve%}
+<table border="1",style="visible">
+        <tr>
+            {% for reserve in availableReserve%}
+        <td onclick="Submit()">{{reserve}}</td>
+        {% endfor %}
+        </tr>
+</table>
+{%endif%}
+
+ <script type="text/javascript">
+    function toWelcome()
+    {
+        window.location="/Welcome";
+    }
+
+    function toJudgeToMenu()
+    {
+        window.location="/JudgeToMenu";
+    }
+
+    var hasReserve=0;
+
+    function Cancel()
+    {
+        var msg="确认取消吗"
+        if(confirm(msg)==false)
+        {
+            return;
+        }
+        else
+        {
+            alert("ok");
+            var element=event.currentTarget;
+            console.log(element.innerText);
+            var DateElement=element.previousElementSibling.previousElementSibling;
+            console.log(DateElement.innerText);
+            var dateTime=DateElement.innerText;
+            var table=DateElement.previousElementSibling.innerText;
+            var datadict={'Date':dateTime,'Table':table};
+            console.log(datadict)
+            var pay_load={"new_result":datadict};
+            var XHR=new XMLHttpRequest();
+            XHR.open('POST','/CancelReserve');
+            XHR.setRequestHeader('content-type', 'application/json');
+            XHR.send(JSON.stringify(pay_load));
+
+            XHR.onreadystatechange = function(){
+              if(XHR.readyState === 4 && XHR.status === 200){
+                 alert(XHR.responseText);
+                 window.location="/Reserve";
+              }
+            }
+        }
+    }
+
+    function Submit()
+    {
+
+        var num={{theNum}};
+        console.log(num);
+        var msg="您确定预约该时间吗";
+        if(confirm(msg)==false)
+        {
+            return
+        }
+        else
+        {
+            if( hasReserve==1)
+            {alert("请重新选择时段预约")
+            return;}
+            var element=event.currentTarget;
+            var msg_1=element.innerText;
+            var datadict={'time':msg_1,'number':num};
+            console.log(datadict)
+            var pay_load={"new_result":datadict};
+            var XHR=new XMLHttpRequest();
+            XHR.open('POST','/MakeReserve');
+            XHR.setRequestHeader('content-type', 'application/json');
+            XHR.send(JSON.stringify(pay_load));
+
+            XHR.onreadystatechange = function(){
+              if(XHR.readyState === 4 && XHR.status === 200){
+                 alert(XHR.responseText);
+                 window.location="/Reserve";
+              }
+            }
+        }
+    }
+ </script>
+</body>
+</html>

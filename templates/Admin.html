@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div><h1 align="center">员工信息展示</h1></div>
+
+<style type="text/css">
+    .mytable {
+        width: 500px;
+        height: 100px;
+        margin: 0 auto;
+    }
+</style>
+<div style="text-align: center;">
+    <table class="mytable" border="1">
+        <tr>
+            <td>员工号</td>
+            <td>职位</td>
+            <td>每月基础工资</td>
+            <td>绩效</td>
+            <td>扣款</td>
+            <td>每月实际工资</td>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.staffNo }}</td>
+                <td>{{ user.post }}</td>
+                <td>{{ user.monthBaseSalary }}</td>
+                <td>{{ user.meritPay }}</td>
+                <td>{{ user.deduction }}</td>
+                <td>{{ user.monthTotalSalary }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

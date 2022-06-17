@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+        height:40px;
+        }
+        .c2{
+        text-align:center;
+        }
+        table{
+        text-align:center;
+        margin:0 auto
+        }
+    </style>
+</head>
+<body>
+    <h1 class="c2">欢迎您选择美味</h1>
+    <form method="post" action="/Menu">
+      <table border="1">
+          <tr>
+              <th>菜品编号</th>
+              <th>菜品名称</th>
+              <th>菜品介绍</th>
+              <th>价格</th>
+              <th>会员价</th>
+              <th>数量</th>
+          </tr>
+    {% for dish in Menu %}
+    <tr>
+        <td>{{dish.get("dishNo")}}</td>
+        <td>{{dish.get("dishName")}}</td>
+        <td>{{dish.get("dishIntroduction")}}</td>
+        <td>{{dish.get("price")}}</td>
+        <td>{{dish.get("memberPrice")}}</td>
+        <td><input type="number"name="{{dish.dishNo}}" value="0"min="0"max="6"/></td>
+    </tr>
+    {% endfor %}
+      </table>
+        </br>
+        <div style="text-align:center;"><input style="width:80px;padding:12px;" type="submit"value="提交菜单"></div>
+    </form>
+    </br>
+    {% if not haveOrder %}
+    <div style="text-align:center;"><input type="button"onclick="toWelcome()" style="width:80px;padding:12px;"value="返回"></div>
+    {%endif%}
+
+          {%if sign%}
+            </br>
+          <p style="text-align:center;">请不要提交空菜单</p>
+          {%endif%}
+    {%if totalCount%}
+    <h3 style="color:red;text-align:center;">您当前的总消费是{{totalCount}}</h3>
+    {%endif%}
+
+    {%if orderedDishes%}
+    <table border="1">
+        <tr>
+              <th>菜品编号</th>
+              <th>菜品名称</th>
+              <th>菜品数量</th>
+              <th>价格</th>
+          </tr>
+        {% for theDishes in orderedDishes%}
+        <tr>
+        <td>{{theDishes.get("dishNo")}}</td>
+        <td>{{theDishes.get("dishName")}}</td>
+        <td>{{theDishes.get("amount")}}</td>
+        <td>{{theDishes.get("theCost")}}</td>
+    </tr>
+        {% endfor %}
+    </table>
+    {%endif%}
+    </br>
+    {% if haveOrder %}
+    <div style="text-align:center;"><input type="button"onclick="toCheckOut()" style="width:80px;padding:12px;"value="结账"></div>
+    {%endif%}
+<script type="text/javascript">
+    function toWelcome()
+    {
+        window.location="/Welcome";
+    }
+    function toCheckOut()
+    {
+        window.location="/CheckOut";
+    }
+ </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <style>
+        .c1{
+        height:40px;
+        text-align:center;
+        }
+    </style>
+</head>
+<body>
+ <h1 class="c1">welcome to our restaurant</h1>
+    <form method="post" action="/Login">
+        <div class="c1">username: <input type="text" name="user"></div>
+        <div class="c1">password(phoneNumber):<input typq="text" name="phone"></div>
+        <div class="c1"><input type="submit"value="Log in">
+        <input type="button"value="sign up"onclick="toSignUp()"></div>
+    </form>
+{% if error %}
+        <p><strong>Error</strong>: {{ error }}</p>
+ {% endif %}
+ <script type="text/javascript">
+    function toSignUp()
+    {
+        window.location="/Register";
+    }
+ </script>
+</body>
+</html>

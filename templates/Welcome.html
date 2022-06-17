@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 style="text-align:center;">你好，亲爱的 {{name}} 欢迎您来到我们的餐厅</h1>
+</br>
+<h1 style="text-align:center;">在这页您可以</h1>
+<h2 style="text-align:center;color:red;" onclick="toProfile()">查看个人信息</h2>
+<h2 style="text-align:center;color:red;" onclick="toMenu()">即刻进店用餐</h2>
+<h2 style="text-align:center;color:red;" onclick="toReserve()">预定餐桌</h2>
+ <script type="text/javascript">
+    function toProfile()
+    {
+        window.location="/Profile";
+    }
+    function toMenu()
+    {
+         window.location="/EatingNow";
+    }
+    function toReserve()
+    {
+        window.location="/Reserve";
+    }
+ </script>
+</body>
+</html>

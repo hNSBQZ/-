@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c2{
+        text-align:center;
+        }
+    </style>
+</head>
+<body>
+<h1 class="c2">请输入您的用餐人数</h1>
+</br>
+<form method="post" action="/EatingNow">
+    <div class="c2"><input required="required" style="width:100px;padding:15px;front-size:13px; text-align:center;" type="number"name="num"min="1"max="6"/></div>
+    </br>
+    <div class="c2"><input style="width:80px;padding:12px;" type="submit"value="确定"></div>
+</form>
+{% if feedback %}
+        <p class="c2"> {{ feedback }}</p>
+ {% endif %}
+{% if toWelcome %}
+        <p style="color:blue;text-align:center;" onclick="toWelcome()">{{ toWelcome }}</p>
+ {% endif %}
+{% if toMenu %}
+        <p style="color:blue;text-align:center;" onclick="toMenu()">{{ toMenu }}</p>
+ {% endif %}
+<script type="text/javascript">
+    function toMenu()
+    {
+        window.location="/Menu";
+    }
+
+    function toWelcome()
+    {
+        window.location="/Welcome";
+    }
+ </script>
+</body>
+</html>

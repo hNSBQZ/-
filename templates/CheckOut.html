@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+        height:40px;
+        }
+        .c2{
+        text-align:center;
+        }
+        table{
+        text-align:center;
+        margin:0 auto
+        }
+    </style>
+</head>
+<body>
+{%if not haveCheckedOut%}
+<h1 style="color:red;text-align:center;">这是您的菜单，请您查验</h1>
+
+<table border="1">
+          <tr>
+              <th>菜品编号</th>
+              <th>菜品名称</th>
+              <th>价格</th>
+              <th>会员价</th>
+              <th>数量</th>
+          </tr>
+    {% for dish in orderDishes%}
+    <tr>
+        <td>{{dish.get("dishNo")}}</td>
+        <td>{{dish.get("dishName")}}</td>
+        <td>{{dish.get("price")}}</td>
+        <td>{{dish.get("memberPrice")}}</td>
+        <td>{{dish.get("amount")}}</td>
+    </tr>
+    {% endfor %}
+    <h2 class="c2">总价格是{{totalCount}}   会员等级是{{memberLevel}}   最终消费{{finalCount}}</h2>
+</table>
+        </br>
+<form method="post" action="/CheckOut">
+    <div class="c2">请为您的服务做出评价<input type="number" name="serveEvaluate"value="1"min="0"max="5"></div>
+    <div class="c2">请为您的菜品做出评价<input type="number" name="cookingEvaluate"value="1"min="0"max="5"></div>
+    </br>
+    <div style="text-align:center;"><input style="width:80px;padding:12px;" type="submit"value="确定结账"></div>
+</form>
+{%endif%}
+{%if haveCheckedOut%}
+</br>
+<h1 class="c2">结账成功</h1>
+<h1 class="c2">您现在的总消费额{{selfTotalCount}}，现在的会员等级{{memberLevel}}</h1>
+{%if haveUpgrade%}
+<h1 class="c2">恭喜您升级了</h1>>
+{%endif%}
+ <div style="text-align:center;"><input type="button"onclick="toWelcome()" style="width:80px;padding:12px;"value="确定"></div>
+{%endif%}
+<script type="text/javascript">
+    function toWelcome()
+    {
+        window.location="/Welcome";
+    }
+ </script>
+</body>
+</html>

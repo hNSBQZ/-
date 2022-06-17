@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+        height:40px;
+        }
+        .c2{
+        text-align:center;
+        }
+        table{
+        text-align:center;
+        margin:0 auto
+        }
+    </style>
+</head>
+<body>
+<h1 class="c2" style="color:red">这是您的个人信息</h1>
+    <h3 class="c2">欢迎来到本餐厅亲爱的 {{userInfo.get("coustomerName")}}</h3>
+    <h3 class="c2">您的手机号是{{userInfo.get("telephonNo")}}</h3>
+    <h3 class="c2">您在这里的总消费是{{userInfo.get("tatolAmount")}}</h3>
+    <h3 class="c2">您在这里的会员等级是 {{userInfo.get("memberLevel")}}</h3>
+    <h3 class="c2">您能享受到的折扣是 {{userInfo.get("discount")}}</h3>
+</br>
+    <h2 style="color:red" class="c2">这是您的历史订单</h2>
+<table border="1">
+    <tr>
+        <th>订单号</th>
+        <th>订单日期</th>
+        <th>原始消费金额</th>
+        <th>最终消费金额</th>
+    </tr>
+    {% for order in historyOrders %}
+    <tr>
+        <td>{{order.get("orderNo")}}</td>
+        <td>{{order.get("orderDate")}}</td>
+        <td>{{order.get("consumptionAmount")}}</td>
+        <td>{{order.get("finalConsumption")}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</br>
+<div class="c2"><input type="button"value="确定" style="width:60px;height:30px " onclick="toWelcome()"></div>
+ <script type="text/javascript">
+    function toWelcome()
+    {
+        window.location="/Welcome";
+    }
+ </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+        height:40px;
+        }
+        .c2{
+        text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="c2">welcome to be the member of our restaurant</h1>
+    <form method="post" action="/Register">
+        <div class="c1 c2">your Name:<input type="text"name="name"required="required"></div>
+        <div class="c1 c2">phoneNum:<input typq="text" name="phone"required="required"></div>
+        <div class="c2">
+            gender:
+            <input type="radio"name="gender"value="m"required>male
+            <input type="radio"name="gender"value="f"required>female
+        </div>
+        <div class="c2"><input type="submit"value="register"onclick="judgeEmpty()">
+        <input type="button"value="return"onclick="toSignUp()"></div>
+    </form>
+
+
+        <p><strong>Sign</strong>: {{ sign }}</p>
+
+ <script type="text/javascript">
+    function toSignUp()
+    {
+        window.location="/Login";
+    }
+
+ </script>
+</body>
+</html>
